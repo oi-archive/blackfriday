@@ -1,18 +1,6 @@
 Blackfriday
 ===========
 
-## Fork
-
-This fork add MathJax support to blackfriday.v2, And enable it by default. It just work like pandoc, It will render math (inline or block) properly.
-
-```bash
-go get github.com/Vonng/blackfriday
-```
-
-
-
------
-
 Blackfriday is a [Markdown][1] processor implemented in [Go][2]. It
 is paranoid about its input (so you can safely feed it user-supplied
 data), it is fast, it supports common extensions (tables, smart
@@ -249,6 +237,27 @@ implements the following extensions:
     becomes `<sup>4</sup>&frasl;<sub>5</sub>`, which renders as
     <sup>4</sup>&frasl;<sub>5</sub>.
 
+*   **MathJaX Support**, where inline math equation quoted by `$` is 
+    translated into `<span cl
+    ss="math inline">`, block math equation
+    quoted by `$$` is translated into `<p><span class="math display">`
+    Which is compatible with mathjax render behavior. `_` in these 
+    block won't be translated into <em>.
+
+    ```
+    $$
+    \left[ \begin{array}{a} a_1 \\ ⋮ \\ a_s \end{array}\right]
+        = \sigma(
+        \left[ \begin{matrix} 
+            w_{1,1} & ⋯  & w_{1,n} \\  
+            ⋮ & ⋱  & ⋮  \\ 
+            w_{s,1} & ⋯  & w_{s,n} \\  
+        \end{matrix}\right]  ·
+        \left[ \begin{array}{x} x_1 \\ ⋮ \\ ⋮ \\ x_n \end{array}\right] + 
+        \left[ \begin{array}{b} b_1 \\ ⋮ \\ b_s \end{array}\right]
+    )
+    $$
+    ```
 
 Other renderers
 ---------------
