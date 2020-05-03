@@ -14,9 +14,11 @@
 package blackfriday
 
 import (
+	"fmt"
 	"io/ioutil"
 	"path/filepath"
 	"regexp"
+	"strings"
 	"testing"
 )
 
@@ -168,8 +170,7 @@ func doTestsReference(t *testing.T, files []string, flag Extensions) {
 
 			actual := string(runMarkdown(input, params))
 			if actual != expected {
-				t.Errorf("\n    [%#v]\nExpected[%#v]\nActual  [%#v]",
-					basename+".text", expected, actual)
+				t.Errorf("\n" + doTestDiff(basename, expected, actual))
 			}
 
 			// now test every prefix of every input to check for
@@ -183,4 +184,25 @@ func doTestsReference(t *testing.T, files []string, flag Extensions) {
 			}
 		}
 	})
+}
+
+func doTestDiff(name, expected, actual string) string {
+	expectedLines := strings.Split(expected, "\n")
+	actualLines := strings.Split(actual, "\n")
+	d := "file: " + name + "\n"
+	for i, line := range expectedLines {
+		// Allow the actualLines indexing to panic because we're in tests where
+		// that's okay and we probably want to know about it if this input is wrong
+		// somehow.
+		if line != actualLines[i] {
+			d += fmt.Sprintf(`
+line: %d
+
+-%s
++%s
+`, i, line, actualLines[i])
+		}
+	}
+
+	return d
 }
