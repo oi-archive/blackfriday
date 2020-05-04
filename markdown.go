@@ -54,7 +54,7 @@ const (
 
 	CommonExtensions Extensions = NoIntraEmphasis | Tables | FencedCode |
 		Autolink | Strikethrough | SpaceHeadings | HeadingIDs |
-		BackslashLineBreak | DefinitionLists | NoEmptyLineBeforeBlock | MathJaxSupport
+		BackslashLineBreak | DefinitionLists | MathJaxSupport
 )
 
 // ListType contains bitwise or'ed flags for list and list item objects.
