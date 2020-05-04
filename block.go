@@ -658,8 +658,9 @@ func isFenceLine(data []byte, info *string, oldmarker string) (end int, marker s
 				i++
 			}
 		}
-		*syntax = string(data[syntaxStart: syntaxStart+syn])
+		//*syntax = string(data[syntaxStart: syntaxStart+syn])
 		*info = strings.TrimSpace(string(data[infoStart : infoStart+infoLength]))
+	}
 
 	if i == len(data) {
 		return i, marker
